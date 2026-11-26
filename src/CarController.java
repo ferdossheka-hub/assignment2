@@ -12,12 +12,14 @@ import java.util.ArrayList;
 public class CarController {
     // The delay (ms) corresponds to 20 updates/second (hz)
     private final int delay = 50;
+    Saab95 saab;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     private Timer timer = new Timer(delay, new TimerListener());
 
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
+
     // TODO A list of cars, modify if needed
     ArrayList<Car> cars = new ArrayList<>();
 
@@ -32,44 +34,64 @@ public class CarController {
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
+            for (int i = 0; i < cars.size(); i++) {
+                Car car = cars.get(i);
+                {
+
+                    int x = (int) Math.round(car.getX());
+                    int y = (int) Math.round(car.getY());
+                    if (car.getDirection() == Direction.SOUTH && car.getY() <= 0) {
+                        car.stopEngine();
+                        car.turnLeft();
+                        car.turnLeft();
+                        car.startEngine();
+
+                    }
+                    if (car.getDirection() == Direction.NORTH && car.getY() >= 560) {
+
+                        car.stopEngine();
+                        car.turnLeft();
+                        car.turnLeft();
+                        car.startEngine();
+
+                    }
+
+                    car.move();
+                    frame.drawPanel.moveit(i, x, 560 - y);
+                    // repaint() calls the paintComponent method of the panel
+                    frame.drawPanel.revalidate();
+                    frame.drawPanel.repaint();
+                }
+
+            }
+        }
+
+        void gas(int amount) {
+            // TODO adapt to your needs
+            double gas = ((double) amount) / 100;
             for (Car car : cars) {
-
-                int x = (int) Math.round(car.getX());
-                int y = (int) Math.round(car.getY());
-                if (car.getDirection() == Direction.SOUTH && car.getY() <= 0) {
-                    car.stopEngine();
-                    car.turnLeft();
-                    car.turnLeft();
-                    car.startEngine();
-                }
-                if (car.getDirection() == Direction.NORTH && car.getY() >= 560){
-
-                    car.stopEngine();
-                    car.turnLeft();
-                    car.turnLeft();
-                    car.startEngine();
-                }
-
-                car.move();
-                frame.drawPanel.moveit(x, 560 - y);
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.revalidate();
-                frame.drawPanel.repaint();
+                car.gas(gas);
             }
 
         }
-    }
 
-    void gas(int amount) {
-        // TODO adapt to your needs
+
+        void brake(int amount) {
+            // TODO adapt to your needs
+            double brake = ((double) amount) / 100;
+            for (Car car : cars) {
+                car.brake(brake);
+            }
+        }
+    }void gas(int amount) {
         double gas = ((double) amount) / 100;
+
         for (Car car : cars) {
             car.gas(gas);
         }
-    }
-    void brake(int amount) {
-        // TODO adapt to your needs
+    }void brake(int amount) {
         double brake = ((double) amount) / 100;
+
         for (Car car : cars) {
             car.brake(brake);
         }
