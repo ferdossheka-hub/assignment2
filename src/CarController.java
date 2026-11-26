@@ -33,10 +33,25 @@ public class CarController {
         public void actionPerformed(ActionEvent e) {
 
             for (Car car : cars) {
-                car.move();
+
                 int x = (int) Math.round(car.getX());
                 int y = (int) Math.round(car.getY());
-                frame.drawPanel.moveit(x, y);
+                if (car.getDirection() == Direction.SOUTH && car.getY() <= 0) {
+                    car.stopEngine();
+                    car.turnLeft();
+                    car.turnLeft();
+                    car.startEngine();
+                }
+                if (car.getDirection() == Direction.NORTH && car.getY() >= 560){
+
+                    car.stopEngine();
+                    car.turnLeft();
+                    car.turnLeft();
+                    car.startEngine();
+                }
+
+                car.move();
+                frame.drawPanel.moveit(x, 560 - y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.revalidate();
                 frame.drawPanel.repaint();
@@ -51,6 +66,12 @@ public class CarController {
         for (Car car : cars) {
             car.gas(gas);
         }
-
+    }
+    void brake(int amount) {
+        // TODO adapt to your needs
+        double brake = ((double) amount) / 100;
+        for (Car car : cars) {
+            car.brake(brake);
+        }
     }
 }
