@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /*
  * This class represents the Controller part in the MVC pattern.
- * Its responsibilities are to listen to the View and responds in a appropriate manner by
+ * Its responsibilities are to listen to the View and responds in an appropriate manner by
  * modifying the model state and the updating the view.
  */
 
@@ -22,6 +22,7 @@ public class CarController {
     ArrayList<Car> cars = new ArrayList<>();
 
     public void startTimer() {
+
         this.timer.start();
     }
 
@@ -30,26 +31,26 @@ public class CarController {
      */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            /*
+
             for (Car car : cars) {
                 car.move();
-                int x = (int) Math.round(car.getPosition().getX());
-                int y = (int) Math.round(car.getPosition().getY());
+                int x = (int) Math.round(car.getX());
+                int y = (int) Math.round(car.getY());
                 frame.drawPanel.moveit(x, y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.revalidate();
                 frame.drawPanel.repaint();
             }
-             */
+
         }
     }
 
     void gas(int amount) {
-        /* TODO adapt to your needs
+        // TODO adapt to your needs
         double gas = ((double) amount) / 100;
         for (Car car : cars) {
             car.gas(gas);
         }
-        */
+
     }
 }
