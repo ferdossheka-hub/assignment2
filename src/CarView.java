@@ -26,6 +26,7 @@ public class CarView extends JFrame {
 
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner;
+
     int gasAmount = 50;
     JLabel gasLabel = new JLabel("Amount of gas");
 
@@ -97,6 +98,12 @@ public class CarView extends JFrame {
         // TODO: Create more for each component as necessary
         gasButton.addActionListener(e -> {
             carC.gas(gasAmount);
+        });
+        brakeButton.addActionListener(e -> {
+            carC.brake(gasAmount);
+        });
+        turboOnButton.addActionListener( e-> {
+            carC.saab.setTurboOn();
         });
 
         // Make the panel layout more compact
